@@ -1,0 +1,23 @@
+{
+    "name": "Google shopping filter site",
+    "description": "Remove sites from the google shopping results",
+    "version": "1.0",
+    "manifest_version": 3,
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.google.com/*tbm=shop*"
+            ],
+            "css": [
+                "style.css"
+            ],
+            "js": [
+                "index.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "storage",
+        "activeTab"
+    ]
+}
