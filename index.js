@@ -28,7 +28,7 @@ document.getElementById('rmsite').addEventListener('click', () => {
   if (sitelist.includes(newsite)){
     sitelist.pop(newsite);
     chrome.storage.local.set({sitenames: sitelist});
-    filterSites();
+    window.location.reload();
   }
 });
 
@@ -41,9 +41,10 @@ function filterSites() {
       let result_cards = results[0].getElementsByClassName(cardcl);
       chrome.storage.local.get('sitenames', result => {
         result.sitenames.map(value => {
-          for (const card of result_cards) {
-            if (card.innerHTML.includes(value)) {
-              card.remove();
+          // can't delete the first without break style
+          for (i = result_cards.length - 1; i > 0; i--) {
+            if (result_cards[i].innerHTML.includes(value)) {
+              result_cards[i].remove();
             }
           }      
         });
@@ -51,4 +52,4 @@ function filterSites() {
     }
   }
 };
-filterSites();
+document.body.onload = filterSites();
