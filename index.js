@@ -16,7 +16,7 @@ chrome.storage.local.get('sitenames', result => {
 });
 
 document.getElementById('adsite').addEventListener('click', () => {
-  let newsite = document.getElementById('newsite').value;
+  const newsite = document.getElementById('newsite').value;
   if (!sitelist.includes(newsite)){
     insertSite(newsite);
     chrome.storage.local.set({sitenames: sitelist});
@@ -24,19 +24,17 @@ document.getElementById('adsite').addEventListener('click', () => {
   }
 });
 document.getElementById('rmsite').addEventListener('click', () => {
-  let newsite = document.getElementById('newsite').value;
-  if (sitelist.includes(newsite)){
-    sitelist.pop(newsite);
-    chrome.storage.local.set({sitenames: sitelist});
-    window.location.reload();
-  }
+  const sitename = document.getElementById('newsite').value;
+  sitelist = sitelist.filter(x => x != sitename)
+  chrome.storage.local.set({sitenames: sitelist});
+  window.location.reload();
 });
 
 function filterSites() {
   if (document.URL.includes('tbm=shop')){
     const respanelcl = 'sh-pr__product-results-grid sh-pr__product-results'
     const cardcl = 'sh-dgr__gr-auto sh-dgr__grid-result'
-    let results = document.getElementsByClassName(respanelcl);
+    const results = document.getElementsByClassName(respanelcl);
     if (results.length > 0){
       let result_cards = results[0].getElementsByClassName(cardcl);
       chrome.storage.local.get('sitenames', result => {
